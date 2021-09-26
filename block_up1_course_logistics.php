@@ -55,15 +55,11 @@ class block_up1_course_logistics extends block_base {
 			$labelnumcourse = get_string('numcours', $this->blockname) . ' : ' . $this->mycourse->id;
 			$infos .= html_writer::tag('div', $labelnumcourse, ['class' => 'student-label-courseid']);
 			$infos .= $this->get_info_course_dates();	
-			$infos .= $this->get_course_register_list();	
+			$infos .= $this->get_course_register_list();
+			$infos .= get_config($this->blockname,'studenthelp');
 			$this->content->text = $infos;
-			
-           // . $this->br($dispdate .' '.  $courseformatter->format_icons($course, 'icons'));
 		}
-	 
 		return $this->content;
-		
-		
 	}
 	
 	private function get_info_composante() {
