@@ -23,5 +23,7 @@ $string['opencourse'] = 'l\'ouuvrir';
 $string['pluginname'] = 'Logistique du cours';
 $string['statusclosed'] = 'Espace fermé';
 $string['statusopen'] = 'Espace ouvert';
+$string['studentview'] = 'Vue étudiante';
+$string['teacherview'] = 'Vue enseignante';
 $string['titlestudent'] = 'À propos de cet espace';
 $string['titleteacher'] = 'Logistique de cours';
