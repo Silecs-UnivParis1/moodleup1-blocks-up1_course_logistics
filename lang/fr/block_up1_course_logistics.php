@@ -6,11 +6,22 @@
  */
 
 $string['acces'] = 'Accès';
+$string['assistance'] = 'Assistance';
+$string['closecourse'] = 'le fermer';
 $string['composante'] = 'Composante :';
 $string['debut'] = 'Début';
+$string['enrolstudents'] = 'Inscrire des étudiants';
+$string['enrolteachers'] = 'Inscrire des intervenants';
 $string['enseignants'] = 'Enseignants :';
 $string['fin'] = 'fin';
-$string['pluginname'] = 'Logistique du cours';
+$string['findapogee'] = 'Trouver un code Apogée (etp...)';
+$string['freeacces'] = 'Auto-inscription et accès libre';
+$string['listteachers'] = 'Lister les enseignants';
 $string['numcours'] = 'N° de cours';
+$string['numcourstogive'] = 'N° de cours à fournir';
+$string['opencourse'] = 'l\'ouuvrir';
+$string['pluginname'] = 'Logistique du cours';
+$string['statusclosed'] = 'Espace fermé';
+$string['statusopen'] = 'Espace ouvert';
 $string['titlestudent'] = 'À propos de cet espace';
 $string['titleteacher'] = 'Logistique de cours';
