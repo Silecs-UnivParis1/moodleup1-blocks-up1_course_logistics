@@ -19,3 +19,12 @@
 .block_up1_course_logistics ul.teacher-list-teachers {
 	list-style-type: none;
 }
+.block_up1_course_logistics div.teacher-space-bloc {
+	margin-bottom: 8px;
+}
+.block_up1_course_logistics div.teacher-enrol-bloc {
+	margin-bottom: 8px;
+}
+.block_up1_course_logistics div.teacher-label-assistance {
+	font-weight: bold;
+}

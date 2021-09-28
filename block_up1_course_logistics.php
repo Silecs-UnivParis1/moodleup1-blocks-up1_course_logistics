@@ -67,6 +67,7 @@ class block_up1_course_logistics extends block_base {
 			$teacherlist =  $this->get_course_teachers_list_active($iconeslink);
 			$manageenrol = $this->get_list_manage_enrol($iconeslink);
 			$infos .= html_writer::tag('div', $inscrits . $teacherlist . $manageenrol, ['class' => 'teacher-enrol-bloc']);
+			$infos .= $this->get_teacher_help_block();
 			$this->content->text = $infos;
 			
 		} elseif ($this->hasstudentrole) {
@@ -223,6 +224,18 @@ class block_up1_course_logistics extends block_base {
 		$nbinscrits = $DB->count_records_sql("SELECT COUNT(DISTINCT userid) FROM {role_assignments} WHERE contextid = ?", [$context->id]);
 		$inscrits = html_writer::tag('div', "Nombre d'" . $linkinscrits . ' : ' . $nbinscrits, ['class' => 'teacher-label-nbinscrits']);
 		return $inscrits;
+	}
+	
+	/**
+	 * Construit le bloc Assistance pour le vue enseignante
+	 * @return string html
+	 */
+	private function get_teacher_help_block() {
+		$bloc = html_writer::tag('div', get_string('assistance', $this->blockname), ['class' => 'teacher-label-assistance']);
+		$labelnumcourse = get_string('numcourstogive', $this->blockname) . ' : ' . $this->mycourse->id;
+		$bloc .= html_writer::tag('div', $labelnumcourse, ['class' => 'teacher-label-courseid']);
+		$bloc .= get_config($this->blockname,'teacherhelp');
+		return $bloc;
 	}
 	
 	/**
