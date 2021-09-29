@@ -106,7 +106,7 @@ class block_up1_course_logistics extends block_base
         $startdate = usergetdate($this->mycourse->startdate);
         $enddate = usergetdate($this->mycourse->enddate);
         $info = get_string('debut', $this->blockname) . ' : ' . $startdate['mday'].'/'.$startdate['mon'].'/'.$startdate['year']
-            . ' - ' . get_string('fin', $this->blockname) . ' : ' . $enddate['mday'].'/'.$enddate['mon'].'/'.$enddate['year'];
+            . ($this->mycourse->enddate == 0 ? '' : ' - ' . get_string('fin', $this->blockname) . ' : ' . $enddate['mday'].'/'.$enddate['mon'].'/'.$enddate['year']);
         $classname = $this->courseupdate ? 'teacher-info-date' : 'student-info-date';
         $action = '';
         if ($classname == 'teacher-info-date') {
