@@ -60,9 +60,7 @@ class block_up1_course_logistics extends block_base {
 			global $OUTPUT, $COURSE;
 			$iconeslink = $OUTPUT->pix_icon('t/expanded', '', 'moodle', ['class' => 'hidden']) . $OUTPUT->pix_icon('t/collapsed', '', 'moodle');
 			
-			$opencourse = html_writer::tag('div', get_string('statusopen', $this->blockname), ['class' => 'teacher-open-bloc']);
-			$infodate = $this->get_info_course_dates();
-			$infos = html_writer::tag('div', $opencourse . $infodate, ['class' => 'teacher-space-bloc']);			
+			$infos = $this->get_info_courseopen();
 			$inscrits = $this->get_info_registered();		
 			$teacherlist =  $this->get_course_teachers_list_active($iconeslink);
 			$manageenrol = $this->get_list_manage_enrol($iconeslink);
@@ -265,6 +263,55 @@ class block_up1_course_logistics extends block_base {
 		$bloc .= get_config($this->blockname,'teacherhelp');
 		return $bloc;
 	}
+	
+	/**
+	 * Construit la ligne fonctionnalité ouvrir le cours pour la vue enseignante
+	 * @return string html
+	 */
+	private function get_info_courseopen() {
+		global $COURSE, $OUTPUT;
+		
+		$status = [ 0 => 'statusclosed', 1 => 'statusopen'];
+		$actions = [0 => 'opencourse', 1 => 'closecourse'];
+		$isvisible = $this->mycourse->visible;
+		$label = html_writer::tag('span', get_string($status[$isvisible], $this->blockname), ['class' => 'teacher-open-label']);
+		$action = '';
+		
+		$archiveyear = $this->get_course_year();
+		$context = context_course::instance($COURSE->id);
+		if (! $archiveyear || has_capability('block/course_opennow:openarchived', $context)) {
+			$buttonname = get_string($actions[$isvisible], $this->blockname);
+			$action = sprintf('<form action="%s" method="post">', new moodle_url('/blocks/up1_course_logistics/open.php'))
+				 . sprintf('<input type="hidden" value="%d" name="courseid" />', $COURSE->id)
+				 . sprintf('<input type="hidden" value="%s" name="sesskey" />', sesskey())
+				 . sprintf('<input type="hidden" value="%d" name="visible" />', $isvisible)
+				 . sprintf('<button type="submit" name="datenow" value="open">%s</button>', $buttonname)
+				 .'</form>';	
+		}
+		
+		$opencourse = html_writer::tag('div', $label . $action, ['class' => 'teacher-open-bloc']);
+		$infodate = $this->get_info_course_dates();
+		return html_writer::tag('div', $opencourse . $infodate, ['class' => 'teacher-space-bloc']);		
+	}
+	
+	/**
+     * renvoie l'année scolaire du cours courant s'il est archivé,
+     * d'après la catégorie ancestrale, champ idnumber
+     * @param array $dates
+     * @return string or null
+     */
+    private function get_course_year() {
+
+        if (up1_meta_get_text($this->page->course->id, 'up1datearchivage') == 0) {
+            return null;
+        }
+        $cat = core_course_category::get($this->page->course->category);
+        if (preg_match('@^\d:(\d{4}-\d{4})/@', $cat->idnumber, $matches)) {
+            return $matches[1];
+        } else {
+            return null;
+        }
+    }
 	
 	/**
      * return the input string followed by a newline (<br />) if not empty, or empty string otherwise.

@@ -28,3 +28,11 @@
 .block_up1_course_logistics div.teacher-label-assistance {
 	font-weight: bold;
 }
+.block_up1_course_logistics div.teacher-open-bloc {
+	text-align: left; 
+	display: flex !important;
+}
+.block_up1_course_logistics span.teacher-open-label {
+	padding-right: 8px;
+	font-weight: bold;
+}
