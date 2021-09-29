@@ -66,7 +66,8 @@ class block_up1_course_logistics extends block_base {
 			$inscrits = $this->get_info_registered();		
 			$teacherlist =  $this->get_course_teachers_list_active($iconeslink);
 			$manageenrol = $this->get_list_manage_enrol($iconeslink);
-			$infos .= html_writer::tag('div', $inscrits . $teacherlist . $manageenrol, ['class' => 'teacher-enrol-bloc']);
+			$acces = $this->get_course_register_list_teacher();
+			$infos .= html_writer::tag('div', $inscrits . $teacherlist . $manageenrol . $acces, ['class' => 'teacher-enrol-bloc']);
 			$infos .= $this->get_teacher_help_block();
 			$this->content->text = $infos;
 			
@@ -164,6 +165,33 @@ class block_up1_course_logistics extends block_base {
 		$courseformatter = new courselist_format('list');
 		$info .= $courseformatter->format_icons($this->mycourse, 'icons');
 		return html_writer::tag('div', $info, ['class' => 'student-info-acces']);
+	}
+	
+	/**
+	 * Construit la liste des méthodes d'inscription du cours pour la vue enseignante
+	 * @return string html
+	 */
+	private function get_course_register_list_teacher() {
+		global $OUTPUT;
+		$listeicones = ['manual' => 'i/user', 'cohort' => 'i/cohort', 'self' => 'i/key', 'guest' => 't/unlocked'];
+		$info = html_writer::tag('span', get_string('acces', $this->blockname) . ' : ', ['class' => 'teacher-label-acces']);
+		$instances = \enrol_get_instances($this->mycourse->id, true);
+        $plugins = \enrol_get_plugins(true);
+        $info .= html_writer::start_tag('span');
+		foreach ($instances as $instance) {
+			if (!isset($plugins[$instance->enrol])) {
+				continue;
+			}
+			$plugin = $plugins[$instance->enrol];
+			$name = $plugin->get_instance_name($instance);
+			if (isset($listeicones[$instance->enrol])) {
+				$info .= $OUTPUT->pix_icon($listeicones[$instance->enrol], $name, 'moodle', ['title' => $name]);
+			} else {
+				$info .= $OUTPUT->pix_icon('i/item', $name, 'moodle', ['title' => $name]);
+			}	
+		}
+		$info .= html_writer::end_tag('span');
+		return html_writer::tag('div', $info, ['class' => 'teacher-info-acces']);
 	}
 	
 	/**
