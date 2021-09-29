@@ -27,7 +27,7 @@ class block_up1_course_logistics extends block_base
     
     public function init()
     {
-        global $COURSE, $USER;
+        global $COURSE, $USER, $DB;
         
         $title = 'titlestudent';
         $context = context_course::instance($COURSE->id);
@@ -57,10 +57,8 @@ class block_up1_course_logistics extends block_base
         $format = course_get_format($this->page->course);
         $this->mycourse = $format->get_course();
         
-        $info_date = $this->get_info_course_dates();
-        
         if ($this->courseupdate) {
-            global $OUTPUT, $COURSE;
+            global $OUTPUT;
             $iconeslink = $OUTPUT->pix_icon('t/expanded', '', 'moodle', ['class' => 'hidden']) . $OUTPUT->pix_icon('t/collapsed', '', 'moodle');
             
             $infos = $this->get_info_courseopen();
