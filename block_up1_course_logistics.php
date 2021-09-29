@@ -235,8 +235,8 @@ class block_up1_course_logistics extends block_base
         $allteachers = [];
         $context = context_course::instance($COURSE->id);
         $roles = ['responsable_epi', 'editingteacher', 'teacher'];
-        foreach ($roles as $sortname) {
-            $role = $DB->get_record('role', ['shortname'=> $sortname]);
+        foreach ($roles as $shortname) {
+            $role = $DB->get_record('role', ['shortname'=> $shortname]);
             if ($role) {
                 $teachers = get_role_users($role->id, $context);
                 if ($teachers) {
@@ -289,7 +289,9 @@ class block_up1_course_logistics extends block_base
         $status = [ 0 => 'statusclosed', 1 => 'statusopen'];
         $actions = [0 => 'opencourse', 1 => 'closecourse'];
         $isvisible = $this->mycourse->visible;
-        $label = html_writer::tag('span', get_string($status[$isvisible], $this->blockname), ['class' => 'teacher-open-label']);
+        $bullet = sprintf('<span style="color:%s;">&#x2B24;</span>&nbsp;', $isvisible ? 'green' : 'red');
+        $label = $bullet . html_writer::tag('span', get_string($status[$isvisible], $this->blockname),
+            ['class' => 'teacher-open-label' . ' ' . $status[$isvisible]]);
         $action = '';
         
         $archiveyear = $this->get_course_year();
