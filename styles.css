@@ -36,3 +36,12 @@
 	padding-right: 8px;
 	font-weight: bold;
 }
+
+.block_up1_course_logistics span.statusopen::before {
+	content: "\2B24\00a0";
+	color: green;
+}
+.block_up1_course_logistics span.statusclosed::before {
+	content: "\2B24\00a0";
+	color: red;
+}

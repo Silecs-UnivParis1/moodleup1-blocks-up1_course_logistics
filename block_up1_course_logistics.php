@@ -289,8 +289,7 @@ class block_up1_course_logistics extends block_base
         $status = [ 0 => 'statusclosed', 1 => 'statusopen'];
         $actions = [0 => 'opencourse', 1 => 'closecourse'];
         $isvisible = $this->mycourse->visible;
-        $bullet = sprintf('<span style="color:%s;">&#x2B24;</span>&nbsp;', $isvisible ? 'green' : 'red');
-        $label = $bullet . html_writer::tag('span', get_string($status[$isvisible], $this->blockname),
+        $label = html_writer::tag('span', get_string($status[$isvisible], $this->blockname),
             ['class' => 'teacher-open-label' . ' ' . $status[$isvisible]]);
         $action = '';
         
