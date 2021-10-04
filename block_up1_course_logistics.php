@@ -217,7 +217,11 @@ class block_up1_course_logistics extends block_base
         );
         $urlcohort = new moodle_url('/local/crswizard/update/index.php', ['id' => $this->mycourse->id, 'direct' => 'cohort']);
         $items = html_writer::tag('li', html_writer::link($urlcohort, get_string('enrolstudents', $this->blockname)));
-        $items .=html_writer::tag('li', html_writer::link(get_config($this->blockname, 'urlapogee'), get_string('findapogee', $this->blockname)));
+        $items .=html_writer::tag('li', html_writer::link(get_config(
+            $this->blockname, 'urlapogee'), 
+            get_string('findapogee', $this->blockname),
+            ['onclick' => "this.target='_blank';"]
+        ));
         $urlteacher = new moodle_url('/local/crswizard/update/index.php', ['id' => $this->mycourse->id, 'direct' => 'teacher']);
         $items .=html_writer::tag('li', html_writer::link($urlteacher, get_string('enrolteachers', $this->blockname)));
         $urlfreeacces = new moodle_url('/local/crswizard/update/index.php', ['id' => $this->mycourse->id, 'direct' => 'key']);
