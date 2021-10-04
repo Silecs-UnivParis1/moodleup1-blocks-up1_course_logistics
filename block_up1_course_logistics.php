@@ -46,12 +46,13 @@ class block_up1_course_logistics extends block_base
     
     public function get_content()
     {
+        global $PAGE;
         if ($this->content !== null) {
-            global $PAGE;
-            $PAGE->requires->js('/blocks/up1_course_logistics/javascript/up1courselogistics.js');
             return $this->content;
         }
-
+        
+        $PAGE->requires->js('/blocks/up1_course_logistics/javascript/up1courselogistics.js');
+        
         $this->content =  new stdClass;
         
         $format = course_get_format($this->page->course);
