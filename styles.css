@@ -13,6 +13,9 @@
 .block_up1_course_logistics div.teacher-label-manage {
 	cursor: pointer;
 }
+.block_up1_course_logistics div.teacher-label-teachers {
+    cursor: pointer;
+}
 .block_up1_course_logistics ul.student-list-teachers {
 	list-style-type: none;
 }
