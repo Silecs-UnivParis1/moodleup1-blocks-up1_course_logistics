@@ -112,7 +112,7 @@ class block_up1_course_logistics extends block_base
         $action = '';
         if ($classname == 'teacher-info-date') {
             $url = new moodle_url('/local/crswizard/update/index.php', ['id' => $this->mycourse->id, 'direct' => 'index']);
-            $action = html_writer::link($url, $OUTPUT->pix_icon('t/edit', '', 'moodle'));
+            $action = html_writer::tag('span', " ") . html_writer::link($url, $OUTPUT->pix_icon('t/edit', '', 'moodle'));
         }
         return html_writer::tag('div', $info . $action, ['class' => $classname]);
     }
