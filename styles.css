@@ -10,6 +10,9 @@
 .block_up1_course_logistics ul.teacher-manage-enrol-list {
 	list-style-type: none;
 }
+.block_up1_course_logistics ul.teacher-manage-enrol-list li {
+	line-height: 20px;
+}
 .block_up1_course_logistics div.teacher-label-manage {
 	cursor: pointer;
 }
@@ -19,8 +22,14 @@
 .block_up1_course_logistics ul.student-list-teachers {
 	list-style-type: none;
 }
+.block_up1_course_logistics ul.student-list-teachers li {
+	line-height: 20px;
+}
 .block_up1_course_logistics ul.teacher-list-teachers {
 	list-style-type: none;
+}
+.block_up1_course_logistics ul.teacher-list-teachers li {
+	line-height: 20px;
 }
 .block_up1_course_logistics div.teacher-space-bloc {
 	margin-bottom: 8px;
