@@ -26,4 +26,4 @@ $string['statusopen'] = 'Espace ouvert';
 $string['studentview'] = 'Vue étudiante';
 $string['teacherview'] = 'Vue enseignante';
 $string['titlestudent'] = 'À propos de cet espace';
-$string['titleteacher'] = 'Logistique de cours';
+$string['titleteacher'] = 'Logistique du cours';
