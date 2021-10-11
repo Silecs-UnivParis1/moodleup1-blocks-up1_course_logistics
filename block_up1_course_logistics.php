@@ -29,12 +29,14 @@ class block_up1_course_logistics extends block_base
     
     public function init()
     {
-        global $COURSE, $USER, $DB;
+        global $COURSE, $USER, $DB, $CFG;
         
         $title = 'titlestudent';
         $context = context_course::instance($COURSE->id);
         if (has_capability('moodle/course:update', $context)) {
             $this->courseupdate = true;
+            require_once($CFG->dirroot . '/local/crswizard/libaccess.php');
+            $this->permassistant = wizard_update_course($COURSE->id);
             $title = 'titleteacher';
         } else {
             $studentrole = $DB->get_record('role', ['shortname'=> 'student']);
@@ -61,7 +63,6 @@ class block_up1_course_logistics extends block_base
         $this->mycourse = $format->get_course();
         
         if ($this->courseupdate) {
-            $this->permassistant = wizard_update_course($this->mycourse->id);
             global $OUTPUT;
             $iconeslink = $OUTPUT->pix_icon('t/expanded', '', 'moodle', ['class' => 'hidden']) . $OUTPUT->pix_icon('t/collapsed', '', 'moodle');
             $infos = $this->get_info_courseopen();
