@@ -11,6 +11,8 @@ class block_up1_course_logistics extends block_base
     
     public $courseupdate = false;
     
+    public $permassistant = false;
+    
     public $hasstudentrole = false;
     
     public $mycourse = null;
@@ -59,9 +61,9 @@ class block_up1_course_logistics extends block_base
         $this->mycourse = $format->get_course();
         
         if ($this->courseupdate) {
+            $this->permassistant = wizard_update_course($this->mycourse->id);
             global $OUTPUT;
             $iconeslink = $OUTPUT->pix_icon('t/expanded', '', 'moodle', ['class' => 'hidden']) . $OUTPUT->pix_icon('t/collapsed', '', 'moodle');
-            
             $infos = $this->get_info_courseopen();
             $inscrits = $this->get_info_registered();
             $teacherlist =  $this->get_course_teachers_list_active($iconeslink);
@@ -110,7 +112,7 @@ class block_up1_course_logistics extends block_base
             . ($this->mycourse->enddate == 0 ? '' : ' - ' . get_string('fin', $this->blockname) . ' : ' . $enddate['mday'].'/'.$enddate['mon'].'/'.$enddate['year']);
         $classname = $this->courseupdate ? 'teacher-info-date' : 'student-info-date';
         $action = '';
-        if ($classname == 'teacher-info-date') {
+        if ($classname == 'teacher-info-date' && $this->permassistant) {
             $url = new moodle_url('/local/crswizard/update/index.php', ['id' => $this->mycourse->id, 'direct' => 'index']);
             $action = html_writer::tag('span', " ") . html_writer::link($url, $OUTPUT->pix_icon('t/edit', '', 'moodle'));
         }
@@ -215,17 +217,22 @@ class block_up1_course_logistics extends block_base
             $iconeslink . get_string('manual:manage', 'enrol_manual'),
             ['class' => 'teacher-label-manage', 'id' => 'teacher-label-manage', 'onclick' => 'togglecollapseall("teacher-label-manage");']
         );
-        $urlcohort = new moodle_url('/local/crswizard/update/index.php', ['id' => $this->mycourse->id, 'direct' => 'cohort']);
-        $items = html_writer::tag('li', html_writer::link($urlcohort, get_string('enrolstudents', $this->blockname)));
+        $items = '';
+        if ($this->permassistant) {
+            $urlcohort = new moodle_url('/local/crswizard/update/index.php', ['id' => $this->mycourse->id, 'direct' => 'cohort']);
+            $items .= html_writer::tag('li', html_writer::link($urlcohort, get_string('enrolstudents', $this->blockname)));
+        }
         $items .=html_writer::tag('li', html_writer::link(get_config(
             $this->blockname, 'urlapogee'), 
             get_string('findapogee', $this->blockname),
             ['onclick' => "this.target='_blank';"]
         ));
-        $urlteacher = new moodle_url('/local/crswizard/update/index.php', ['id' => $this->mycourse->id, 'direct' => 'teacher']);
-        $items .=html_writer::tag('li', html_writer::link($urlteacher, get_string('enrolteachers', $this->blockname)));
-        $urlfreeacces = new moodle_url('/local/crswizard/update/index.php', ['id' => $this->mycourse->id, 'direct' => 'key']);
-        $items .=html_writer::tag('li', html_writer::link($urlfreeacces, get_string('freeacces', $this->blockname)));
+        if ($this->permassistant) {
+            $urlteacher = new moodle_url('/local/crswizard/update/index.php', ['id' => $this->mycourse->id, 'direct' => 'teacher']);
+            $items .=html_writer::tag('li', html_writer::link($urlteacher, get_string('enrolteachers', $this->blockname)));
+            $urlfreeacces = new moodle_url('/local/crswizard/update/index.php', ['id' => $this->mycourse->id, 'direct' => 'key']);
+            $items .=html_writer::tag('li', html_writer::link($urlfreeacces, get_string('freeacces', $this->blockname)));
+        }
         $infos .= html_writer::tag('ul', $items, ['class' => 'teacher-manage-enrol-list hidden', 'id' => 'bloc-teacher-label-manage']);
         return html_writer::tag('div', $infos, ['class' => 'teacher-manage-enrol-bloc']);
     }
