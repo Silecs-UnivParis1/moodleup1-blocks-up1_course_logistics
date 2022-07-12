@@ -40,6 +40,9 @@
 .block_up1_course_logistics div.teacher-label-assistance {
 	font-weight: bold;
 }
+.block_up1_course_logistics div.teacher-label-panopto {
+	font-weight: bold;
+}
 .block_up1_course_logistics div.teacher-open-bloc {
 	text-align: left; 
 	display: flex !important;
@@ -56,4 +59,30 @@
 .block_up1_course_logistics span.statusclosed::before {
 	content: "\2B24\00a0";
 	color: red;
+}
+.block_up1_course_logistics span.synchrook::before {
+	content: "\2B24\00a0";
+	color: green;
+}
+.block_up1_course_logistics span.oknocohort::before {
+	content: "\2B24\00a0";
+	color: orange;
+}
+.block_up1_course_logistics span.synchrook {
+	color: green;
+}
+.block_up1_course_logistics span.konoblock {
+	color: red;
+}
+.block_up1_course_logistics span.oknocohort {
+	color: orange;
+}
+.block_up1_course_logistics span.synchrookdate {
+	color: green;
+}
+.block_up1_course_logistics span.konoblockdate {
+	color: red;
+}
+.block_up1_course_logistics span.oknocohortdate {
+	color: orange;
 }
