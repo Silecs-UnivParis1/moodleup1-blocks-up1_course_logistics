@@ -355,6 +355,7 @@ class block_up1_course_logistics extends block_base
         $status = [ 'synchrook',  'oknocohort',  'konoblock'];
         $retourPanopto = up1_meta_get_list($this->mycourse->id, 'up1panoptoflag', false, ' / ', false);
         $datePanopto = up1_meta_get_list($this->mycourse->id, 'up1panoptodate', false, ' / ', false);
+        $label = $label_time = $iconeslink = $action = $bloc = $remarque = '';
         
         if (in_array($retourPanopto,$status)){
             $bloc = html_writer::tag('div', get_string('informationspanopto', $this->blockname), ['class' => 'teacher-label-panopto']);
@@ -367,15 +368,14 @@ class block_up1_course_logistics extends block_base
                 $url = new moodle_url('/course/view.php?id=2231&section=7');
                 $action =  '</br>' .  html_writer::tag('span', " ") . html_writer::link($url, "FAQ Amphi virtuels Panopto") ;  
             }
-            else 
-                $affichageProgrammation = (time()  > $datePanopto) ? get_string("lastprogrammation", $this->blockname) : get_string("nextprogrammation", $this->blockname);     
-            
+            else {
+                $affichageProgrammation = (time()  > $datePanopto) ? get_string("lastprogrammation", $this->blockname) : get_string("nextprogrammation", $this->blockname);
+            }
             $label_time = ( $datePanopto != '') ?  "</br>" . html_writer::tag('span',  $affichageProgrammation .  date("d-m-y H:m:s ", $datePanopto ) , ['class' => 'panopto-status-label' . ' ' . $retourPanopto.'date']) : '';
             $remarque =  ($retourPanopto  == "oknocohort") ? '</br>' .  html_writer::tag('span', get_string("oknocohortremarque", $this->blockname) , ['class' => 'panopto-status-label' . ' ' . $retourPanopto."date"]) : "";
-         
         }
         
-        return html_writer::tag('div', $bloc  . $iconeslink . $label . $label_time  . $remarque .$action , ['class' => 'teacher-info-acces']); 
+        return html_writer::tag('div', $bloc . $iconeslink . $label . $label_time . $remarque . $action , ['class' => 'teacher-info-acces']); 
     }
     
 
