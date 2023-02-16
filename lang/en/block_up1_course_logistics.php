@@ -36,3 +36,5 @@ $string['nextprogrammation'] = 'Prochaine programmation : ';
 $string['lastprogrammation'] = 'Dernière programmation : ';
 $string['failedlastprogrammation'] = 'Dernière programmation non diffusée : ';
 $string['failednextprogrammation'] = 'Prochaine programmation non diffusée : ';
+$string['up1_course_logistics:addinstance'] = 'Ajouter un block logistique du cours';
+$string['up1_course_logistics:myaddinstance'] = 'Impossible';
