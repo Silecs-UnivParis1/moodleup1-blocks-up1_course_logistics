@@ -71,7 +71,7 @@
 .block_up1_course_logistics span.synchrook {
 	color: green;
 }
-.block_up1_course_logistics span.konoblock {
+.block_up1_course_logistics span.konoblock,span.ko{
 	color: red;
 }
 .block_up1_course_logistics span.oknocohort {
@@ -80,7 +80,7 @@
 .block_up1_course_logistics span.synchrookdate {
 	color: green;
 }
-.block_up1_course_logistics span.konoblockdate {
+.block_up1_course_logistics span.konoblockdate,span.kodate {
 	color: red;
 }
 .block_up1_course_logistics span.oknocohortdate {

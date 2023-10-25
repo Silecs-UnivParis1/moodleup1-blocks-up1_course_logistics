@@ -353,7 +353,7 @@ class block_up1_course_logistics extends block_base
     private function get_panopto_informations()
     {
         global $OUTPUT;
-        $status = [ 'synchrook',  'oknocohort',  'konoblock'];
+        $status = [ 'synchrook',  'oknocohort',  'konoblock','ko'];
         $retourPanopto = up1_meta_get_list($this->mycourse->id, 'up1panoptoflag', false, ' / ', false);
         $datePanopto = up1_meta_get_list($this->mycourse->id, 'up1panoptodate', false, ' / ', false);
         $label = $label_time = $iconeslink = $action = $bloc = $remarque = '';
@@ -362,7 +362,7 @@ class block_up1_course_logistics extends block_base
             $bloc = html_writer::tag('div', get_string('informationspanopto', $this->blockname), ['class' => 'teacher-label-panopto']);
             $label = html_writer::tag('span', get_string($retourPanopto, $this->blockname), ['class' => 'panopto-status-label' . ' ' . $retourPanopto]);
 
-            if ($retourPanopto  == "konoblock"){
+            if ($retourPanopto == "konoblock" || $retourPanopto == "ko"){
                 $iconeslink =  $OUTPUT->pix_icon('/i/risk_xss', '', 'core')  ;
                 $affichageProgrammation = (time()  > $datePanopto) ? get_string("failedlastprogrammation", $this->blockname) : get_string("failednextprogrammation", $this->blockname);
 
@@ -372,7 +372,7 @@ class block_up1_course_logistics extends block_base
             else {
                 $affichageProgrammation = (time()  > $datePanopto) ? get_string("lastprogrammation", $this->blockname) : get_string("nextprogrammation", $this->blockname);
             }
-            $label_time = ( $datePanopto != '') ?  "</br>" . html_writer::tag('span',  $affichageProgrammation .  date("d-m-y H:m:s ", $datePanopto ) , ['class' => 'panopto-status-label' . ' ' . $retourPanopto.'date']) : '';
+            $label_time = ( $datePanopto != '') ?  "</br>" . html_writer::tag('span',  $affichageProgrammation . date("d/m/Y", $datePanopto ) . ' à ' . date("H:i ", $datePanopto ) , ['class' => 'panopto-status-label' . ' ' . $retourPanopto.'date']) : '';
             $remarque =  ($retourPanopto  == "oknocohort") ? '</br>' .  html_writer::tag('span', get_string("oknocohortremarque", $this->blockname) , ['class' => 'panopto-status-label' . ' ' . $retourPanopto."date"]) : "";
         }
         

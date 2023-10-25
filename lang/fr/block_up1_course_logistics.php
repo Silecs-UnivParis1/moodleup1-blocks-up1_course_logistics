@@ -31,6 +31,7 @@ $string['informationspanopto'] = 'Amphi virtuel Panopto';
 $string['oknocohort'] = "Cet EPI est correctement paramétré pour y diffuser les enregistrements d'Amphi virtuel Panopto";
 $string['oknocohortremarque'] = "Remarque : La cohorte matière n'est pas inscrite.";
 $string['konoblock'] = "Le bloc 'Amphi virtuel Panopto' n'est pas ajouté à cet EPI, l'enregistrement de votre cours n'y apparaitra pas.";
+$string['ko'] = "Erreur lors de la planification de la captation. Votre cours ne sera pas enregistré.";
 $string['synchrook'] = "Cet EPI est correctement paramétré pour y diffuser les enregistrements d'Amphi virtuel Panopto";
 $string['nextprogrammation'] = 'Prochaine programmation : ';
 $string['lastprogrammation'] = 'Dernière programmation : ';
