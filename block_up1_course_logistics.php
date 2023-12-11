@@ -287,8 +287,10 @@ class block_up1_course_logistics extends block_base
      */
     private function get_teacher_help_block()
     {
+        $courseformatter = new courselist_format('list');
         $bloc = html_writer::tag('div', get_string('assistance', $this->blockname), ['class' => 'teacher-label-assistance']);
-        $labelnumcourse = get_string('numcourstogive', $this->blockname) . ' : ' . $this->mycourse->id;
+        $labelnumcourse = get_string('numcourstogive', $this->blockname) . ' : ' . $this->mycourse->id 
+            . ' ' . $courseformatter->format_icons($this->mycourse, 'icons');
         $bloc .= html_writer::tag('div', $labelnumcourse, ['class' => 'teacher-label-courseid']);
         $bloc .= get_config($this->blockname, 'teacherhelp');
         return $bloc;

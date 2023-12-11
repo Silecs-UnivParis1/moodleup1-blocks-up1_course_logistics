@@ -15,4 +15,5 @@ $plugin->dependencies = [
     'local_crswizard' => 2021060600,
     'local_up1_courselist' => 2020100300,
     'local_up1_metadata' => 2020100300,
+    'block_lightsynopsis' => 2020120800,
 ];
