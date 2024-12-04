@@ -336,10 +336,11 @@ class block_up1_course_logistics extends block_base
      */
     private function get_course_year()
     {
+        global $DB;
         if (up1_meta_get_text($this->page->course->id, 'up1datearchivage') == 0) {
             return null;
         }
-        $cat = core_course_category::get($this->page->course->category);
+        $cat = $DB->get_record('course_categories', ['id' => $this->page->course->category]);
         if (preg_match('@^\d:(\d{4}-\d{4})/@', $cat->idnumber, $matches)) {
             return $matches[1];
         } else {
