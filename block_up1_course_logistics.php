@@ -63,7 +63,7 @@ class block_up1_course_logistics extends block_base
         $this->mycourse = $format->get_course();
         
         if ($this->courseupdate) {
-            global $OUTPUT;
+            global $OUTPUT,$USER;
             $iconeslink = $OUTPUT->pix_icon('t/expanded', '', 'moodle', ['class' => 'hidden']) . $OUTPUT->pix_icon('t/collapsed', '', 'moodle');
             $infos = $this->get_info_courseopen();
             $inscrits = $this->get_info_registered();
@@ -73,6 +73,7 @@ class block_up1_course_logistics extends block_base
             $infos .= html_writer::tag('div', $inscrits . $teacherlist . $manageenrol . $acces, ['class' => 'teacher-enrol-bloc']);
             $infos .= $this->get_teacher_help_block();
             $infos .= $this->get_panopto_informations();
+            $infos .= $this->get_info_captation_open();
             $this->content->text = $infos;
         } elseif ($this->hasstudentrole) {
             $infos = $this->get_info_composante();
@@ -357,8 +358,8 @@ class block_up1_course_logistics extends block_base
     {
         global $OUTPUT;
         $status = [ 'synchrook',  'oknocohort',  'konoblock','ko'];
-        $retourPanopto = up1_meta_get_list($this->mycourse->id, 'up1panoptoflag', false, ' / ', false);
-        $datePanopto = up1_meta_get_list($this->mycourse->id, 'up1panoptodate', false, ' / ', false);
+        $retourPanopto = up1_meta_get_text($this->mycourse->id, 'up1panoptoflag', false);
+        $datePanopto = up1_meta_get_text($this->mycourse->id, 'up1panoptodate', false);
         $label = $label_time = $iconeslink = $action = $bloc = $remarque = '';
         
         if (in_array($retourPanopto,$status)){
@@ -382,6 +383,41 @@ class block_up1_course_logistics extends block_base
         return html_writer::tag('div', $bloc . $iconeslink . $label . $label_time . $remarque . $action , ['class' => 'teacher-info-acces']); 
     }
     
+    /**
+     * Construit la ligne fonctionnalité bloquer les captation de cet EPI
+     * @return string html
+     */
+    private function get_info_captation_open()
+    {
+        global $COURSE, $OUTPUT,$DB;
+
+        $blocked = [ 0 => 'captationopen', 1 => 'captationblocked' ];
+        $actions = [ 0 => 'blockcaptation', 1 => 'opencaptation'];
+        $isblocked =  boolval(up1_meta_get_text($COURSE->id, 'up1bloquercaptation', false));
+
+        $context = context_course::instance($COURSE->id);
+        $count=$DB->count_records('block_instances', array('parentcontextid' => $context->id, 'blockname'=>'panopto'));
+        $retourPanopto = up1_meta_get_text($this->mycourse->id, 'up1panoptoflag', false);
+
+        if (has_capability('moodle/course:update', $context) && $count==1 && !empty($retourPanopto)) {
+            $label = html_writer::tag('span', get_string( $blocked [$isblocked], $this->blockname),
+            ['class' => 'teacher-open-label' . ' ' . $blocked[$isblocked]]);
+
+            $buttonname = get_string($actions[ $isblocked], $this->blockname);
+            $action = sprintf('<form action="%s" method="post">', new moodle_url('/blocks/up1_course_logistics/captation.php'))
+                 . sprintf('<input type="hidden" value="%d" name="courseid" />', $COURSE->id)
+                 . sprintf('<input type="hidden" value="%s" name="sesskey" />', sesskey())
+                 . sprintf('<input type="hidden" value="%d" name="blocked" />', $isblocked)
+                 . sprintf('<button type="submit" name="datenow" value="open">%s</button>', $buttonname)
+                 .'</form>';
+            $bloc = html_writer::tag('div',$label  . $action, ['class'=> 'teacher-open-bloc'] );
+
+            $label_remarque = ( $isblocked== 1) ? html_writer::tag('span', get_string( 'blockcaptationmessage', $this->blockname),
+            ['class' => 'blockedcaptation']) : '';
+            $bloc .=  html_writer::tag('div',  $label_remarque );
+        }
+        return $bloc ;
+    }
 
     /**
      * return the input string followed by a newline (<br />) if not empty, or empty string otherwise.
