@@ -176,6 +176,7 @@ class block_up1_course_logistics extends block_base
         $info = html_writer::tag('span', get_string('acces', $this->blockname) . ' : ', ['class' => 'student-label-acces']);
         $courseformatter = new courselist_format('list');
         $info .= $courseformatter->format_icons($this->mycourse, 'icons');
+        $info .= $this->get_syllabus_informations();
         return html_writer::tag('div', $info, ['class' => 'student-info-acces']);
     }
     
@@ -291,7 +292,8 @@ class block_up1_course_logistics extends block_base
         $bloc = html_writer::tag('div', get_string('assistance', $this->blockname), ['class' => 'teacher-label-assistance']);
         $labelnumcourse = get_string('numcourstogive', $this->blockname) . ' : ' . $this->mycourse->id 
             . ' ' . $courseformatter->format_icons($this->mycourse, 'icons');
-        $bloc .= html_writer::tag('div', $labelnumcourse, ['class' => 'teacher-label-courseid']);
+        $liensyllabus = $this->get_syllabus_informations();
+        $bloc .= html_writer::tag('div', $labelnumcourse . $liensyllabus, ['class' => 'teacher-label-courseid']);
         $bloc .= get_config($this->blockname, 'teacherhelp');
         return $bloc;
     }
@@ -381,6 +383,20 @@ class block_up1_course_logistics extends block_base
         
         return html_writer::tag('div', $bloc . $iconeslink . $label . $label_time . $remarque . $action , ['class' => 'teacher-info-acces']); 
     }
+
+    /**
+     * Construit le lien vers la page Syllabus servie par le block block_lightsynopsis
+     * @return string
+     */
+    private function get_syllabus_informations()
+    {
+        global $OUTPUT, $COURSE;
+        if (!up1_meta_get_text($COURSE->id, 'syl_elpcode', false)) {
+            return '';
+        }
+        $url = new moodle_url('/blocks/lightsynopsis/viewsyllabus.php', ['id' => $COURSE->id]);
+        return $OUTPUT->action_link($url, '<i class="fas fa-s"></i>', null, ['title' => 'Afficher le syllabus du cours', 'class' => 'action-icon']);
+    }
     
 
     /**
@@ -396,18 +412,18 @@ class block_up1_course_logistics extends block_base
             return '';
         }
     }
-    
+
     public function applicable_formats()
     {
         return array('course' => true,
                      'all' => false);
     }
-    
+
     public function hide_header()
     {
         return false;
     }
-    
+
     public function instance_allow_multiple()
     {
         return false;
