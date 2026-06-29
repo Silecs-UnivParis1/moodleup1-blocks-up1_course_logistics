@@ -415,6 +415,7 @@ class block_up1_course_logistics extends block_base
         $count=$DB->count_records('block_instances', array('parentcontextid' => $context->id, 'blockname'=>'panopto'));
         $retourPanopto = up1_meta_get_text($this->mycourse->id, 'up1panoptoflag', false);
 
+        $bloc = '';
         if (has_capability('moodle/course:update', $context) && $count==1 && !empty($retourPanopto)) {
             $label = html_writer::tag('span', get_string( $blocked [$isblocked], $this->blockname),
             ['class' => 'teacher-open-label' . ' ' . $blocked[$isblocked]]);
