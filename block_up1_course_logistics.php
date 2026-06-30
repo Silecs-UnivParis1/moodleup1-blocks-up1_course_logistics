@@ -360,8 +360,8 @@ class block_up1_course_logistics extends block_base
     {
         global $OUTPUT;
         $status = [ 'synchrook',  'oknocohort',  'konoblock','ko'];
-        $retourPanopto = up1_meta_get_text($this->mycourse->id, 'up1panoptoflag', false);
-        $datePanopto = up1_meta_get_text($this->mycourse->id, 'up1panoptodate', false);
+        $retourPanopto = up1_meta_get_text($this->mycourse->id, 'up1captationflag', false);
+        $datePanopto = up1_meta_get_text($this->mycourse->id, 'up1captationdate', false);
         $label = $label_time = $iconeslink = $action = $bloc = $remarque = '';
         
         if (in_array($retourPanopto,$status)){
@@ -413,7 +413,7 @@ class block_up1_course_logistics extends block_base
 
         $context = context_course::instance($COURSE->id);
         $count=$DB->count_records('block_instances', array('parentcontextid' => $context->id, 'blockname'=>'panopto'));
-        $retourPanopto = up1_meta_get_text($this->mycourse->id, 'up1panoptoflag', false);
+        $retourPanopto = up1_meta_get_text($this->mycourse->id, 'up1captationflag', false);
 
         $bloc = '';
         if (has_capability('moodle/course:update', $context) && $count==1 && !empty($retourPanopto)) {
