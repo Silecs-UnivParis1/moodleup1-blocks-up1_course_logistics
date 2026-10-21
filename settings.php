@@ -17,6 +17,14 @@ $urlapofee = new admin_setting_configtext(
 );
 $settings->add($urlapofee);
 
+$faqurl = new admin_setting_configtext(
+    'block_up1_course_logistics/faqurl',
+    'URL de la FAQ',
+    "URL du lien vers la FAQ affiché à l'enseignant",
+    'http://univ1.fr/FAQ_EPI_archive_ouvert'
+);
+$settings->add($faqurl);
+
 $teacherhelp = new admin_setting_confightmleditor(
     'block_up1_course_logistics/teacherhelp',
     'Bloc assistance enseignant',

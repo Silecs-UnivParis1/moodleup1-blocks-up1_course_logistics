@@ -64,6 +64,7 @@ class block_up1_course_logistics extends block_base
         
         if ($this->courseupdate) {
             global $OUTPUT,$USER;
+            $this->set_footer();
             $iconeslink = $OUTPUT->pix_icon('t/expanded', '', 'moodle', ['class' => 'hidden']) . $OUTPUT->pix_icon('t/collapsed', '', 'moodle');
             $infos = $this->get_info_courseopen();
             $inscrits = $this->get_info_registered();
@@ -434,6 +435,19 @@ class block_up1_course_logistics extends block_base
             $bloc .=  html_writer::tag('div',  $label_remarque );
         }
         return $bloc ;
+    }
+
+    private function set_footer() {
+        global $OUTPUT;
+
+        $this->content->footer = '';
+        if (null !== (get_config($this->blockname, 'faqurl'))) {
+            $url = get_config($this->blockname, 'faqurl');
+            $this->content->footer = html_writer::link($url, get_string('morehelp', $this->blockname))
+            . " " . $OUTPUT->action_icon($url, new pix_icon('i/info', get_string('faqepi', $this->blockname)));
+            return true;
+        }
+        return false;
     }
 
     /**
