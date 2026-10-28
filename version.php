@@ -7,7 +7,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version = 20261021000;
+$plugin->version = 20261022000;
 $plugin->requires =  2020060900;
 $plugin->component = 'block_up1_course_logistics';
 

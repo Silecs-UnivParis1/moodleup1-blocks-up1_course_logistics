@@ -10,26 +10,35 @@ defined('MOODLE_INTERNAL') || die();
 
 $capabilities = array(
 
-    'block/up1_course_logistics:myaddinstance' => array(
+    'block/up1_course_logistics:myaddinstance' => [
         'captype' => 'write',
         'contextlevel' => CONTEXT_SYSTEM,
-        'archetypes' => array(
+        'archetypes' => [
             'user' => CAP_ALLOW
-        ),
+        ],
 
         'clonepermissionsfrom' => 'moodle/my:manageblocks'
-    ),
+    ],
 
-    'block/up1_course_logistics:addinstance' => array(
+    'block/up1_course_logistics:addinstance' => [
         'riskbitmask' => RISK_SPAM | RISK_XSS,
 
         'captype' => 'write',
         'contextlevel' => CONTEXT_BLOCK,
-        'archetypes' => array(
+        'archetypes' => [
             'editingteacher' => CAP_ALLOW,
             'manager' => CAP_ALLOW
-        ),
+        ],
 
         'clonepermissionsfrom' => 'moodle/site:manageblocks'
-    ),
+    ],
+
+    'block/up1_course_logistics:openarchived' => [
+        'riskbitmask' => 0,
+        'captype' => 'write',
+        'contextlevel' => CONTEXT_COURSE,
+        'archetypes' => [
+            'manager' => CAP_ALLOW
+        ],
+    ],
 );

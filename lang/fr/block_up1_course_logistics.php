@@ -41,6 +41,7 @@ $string['failedlastprogrammation'] = 'Dernière programmation non diffusée : ';
 $string['failednextprogrammation'] = 'Prochaine programmation non diffusée : ';
 $string['up1_course_logistics:addinstance'] = 'Ajouter un block logistique du cours';
 $string['up1_course_logistics:myaddinstance'] = 'Impossible';
+$string['up1_course_logistics:openarchived'] = 'Ouvrir/fermé un cours archivé';
 $string['captationblocked'] = 'Captation bloquée : ';
 $string['captationopen'] = 'Captation autorisée : ';
 $string['blockcaptation'] = 'Bloquer ';

@@ -307,17 +307,21 @@ class block_up1_course_logistics extends block_base
     private function get_info_courseopen()
     {
         global $COURSE, $OUTPUT;
-        
+        $archive = '';
+        $dates = up1_meta_get_date($this->page->course->id, 'datearchivage');
+        if ($dates['datefr']) {
+            $archive = html_writer::tag('div', 'Cours archivé depuis le ' . $dates['datefr'], ['class' => 'teacher-open-bloc']);
+        }
         $status = [ 0 => 'statusclosed', 1 => 'statusopen'];
         $actions = [0 => 'opencourse', 1 => 'closecourse'];
         $isvisible = $this->mycourse->visible;
         $label = html_writer::tag('span', get_string($status[$isvisible], $this->blockname),
             ['class' => 'teacher-open-label' . ' ' . $status[$isvisible]]);
         $action = '';
-        
+        $dates = up1_meta_get_date($this->page->course->id, 'datearchivage');
         $archiveyear = $this->get_course_year();
         $context = context_course::instance($COURSE->id);
-        if (! $archiveyear || has_capability('block/course_opennow:openarchived', $context)) {
+        if (! $archiveyear || has_capability('block/up1_course_logistics:openarchived', $context)) {
             $buttonname = get_string($actions[$isvisible], $this->blockname);
             $action = sprintf('<form action="%s" method="post">', new moodle_url('/blocks/up1_course_logistics/open.php'))
                  . sprintf('<input type="hidden" value="%d" name="courseid" />', $COURSE->id)
@@ -329,7 +333,7 @@ class block_up1_course_logistics extends block_base
         
         $opencourse = html_writer::tag('div', $label . $action, ['class' => 'teacher-open-bloc']);
         $infodate = $this->get_info_course_dates();
-        return html_writer::tag('div', $opencourse . $infodate, ['class' => 'teacher-space-bloc']);
+        return html_writer::tag('div', $archive . $opencourse . $infodate, ['class' => 'teacher-space-bloc']);
     }
     
     /**
