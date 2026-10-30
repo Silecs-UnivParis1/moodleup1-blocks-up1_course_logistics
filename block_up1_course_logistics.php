@@ -33,7 +33,7 @@ class block_up1_course_logistics extends block_base
         
         $title = 'titlestudent';
         $context = context_course::instance($COURSE->id);
-        if (has_capability('moodle/course:update', $context)) {
+        if (has_capability('moodle/course:update', $context) || has_capability('block/up1_course_logistics:openarchived', $context)) {
             $this->courseupdate = true;
             require_once($CFG->dirroot . '/local/crswizard/libaccess.php');
             $this->permassistant = wizard_update_course($COURSE->id);
